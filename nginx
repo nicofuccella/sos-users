@@ -1,0 +1,20 @@
+server {
+    listen 80;
+
+    location ^~ /simplesaml {
+        alias /var/simplesamlphp/www;
+
+        # The prefix must match the baseurlpath configuration option
+        location ~ ^(?<prefix>/simplesaml)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
+            include fastcgi_params;
+            fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$phpfile;
+
+            # Must be prepended with the baseurlpath
+            fastcgi_param SCRIPT_NAME /simplesaml$phpfile;
+
+            fastcgi_param PATH_INFO $pathinfo if_not_empty;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+.DS_Store
+.env
+logs
+.idea
+src
+dev_package/packages
+dev_package/pkg_dev.xml
