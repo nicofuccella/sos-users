@@ -15,21 +15,8 @@ RUN apt-get install -y curl\
 RUN wget -qO- https://simplesamlphp.org/download?latest | tar -xz -C /var &&\
   mv /var/simplesamlphp-* /var/simplesamlphp
 
-COPY nginx /home/nginx
+COPY simplesamlphp /var/simplesamlphp
 
-#RUN sed -i '$ d' /home/nginx &&\
-#   echo\
-#   "location ^~ /simplesaml {\
-#       alias /var/simplesamlphp/www;\
-#       location ~ \.php(/|$) {\
-#         root             /var/simplesamlphp/www;\
-#         fastcgi_pass     unix:/run/php/php7.2-fpm.sock;\
-#         fastcgi_index    index.php;\
-#         fastcgi_param    SCRIPT_FILENAME /var/simplesamlphp/www\$fastcgi_script_name;\
-#         fastcgi_split_path_info ^(.+?\.php)(/.*)$;\
-#         fastcgi_param    PATH_INFO \$fastcgi_path_info;\
-#         include          fastcgi_params;\
-#       }\
-#     }\
-#   }" >> /home/nginx
-#
+COPY saml /etc/nginx/sites-available/saml
+
+RUN ln -s /etc/nginx/sites-available/saml /etc/nginx/sites-enabled/saml
