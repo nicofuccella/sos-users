@@ -89,7 +89,7 @@ $config = [
      *
      * See this page for a list of valid timezones: http://php.net/manual/en/timezones.php
      */
-    'timezone' => null,
+    'timezone' => 'Europe/Rome',
 
 
 
@@ -119,8 +119,8 @@ $config = [
      * Set this options to true if you want to require administrator password to access the web interface
      * or the metadata pages, respectively.
      */
-    'admin.protectindexpage' => false,
-    'admin.protectmetadata' => false,
+    'admin.protectindexpage' => true,
+    'admin.protectmetadata' => true,
 
     /*
      * Set this option to false if you don't want SimpleSAMLphp to check for new stable releases when
@@ -225,8 +225,8 @@ $config = [
      * empty array.
      */
     'debug' => [
-        'saml' => true,
-        'backtraces' => true,
+        'saml' => false,
+        'backtraces' => false,
         'validatexml' => false,
     ],
 
@@ -237,7 +237,8 @@ $config = [
      * When 'errorreporting' is enabled, a form will be presented for the user to report
      * the error to 'technicalcontact_email'.
      */
-    'showerrors' => true,
+    'showerr
+    ors' => true,
     'errorreporting' => true,
 
     /*
@@ -734,7 +735,7 @@ $config = [
         'et', 'he', 'id', 'sr', 'lv', 'ro', 'eu', 'el', 'af', 'zu', 'xh',
     ],
     'language.rtl' => ['ar', 'dv', 'fa', 'ur', 'he'],
-    'language.default' => 'en',
+    'language.default' => 'it',
 
     /*
      * Options to override the default settings for the language parameter

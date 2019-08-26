@@ -4,4 +4,5 @@ logs
 .idea
 dev_package/packages
 dev_package/pkg_dev.xml
-cert
+*.pem
+*.crt

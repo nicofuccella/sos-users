@@ -1,14 +1,7 @@
-FROM scuolaonlineservice/sample-scuola
+FROM simo
 
 RUN apt-get install -y curl\
-  #php7.2-date\
   php7.2-dom\
-  #php7.2-hash\
-  #php7.2-libxml\
-  #php7.2-openssl\
-  #php7.2-pcre\
-  #php7.2-SPL\
-  #php7.2-zlib\
   php7.2-mbstring\
   vim
 

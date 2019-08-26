@@ -10,9 +10,8 @@ services:
     volumes:
     - ./logs/nginx:/var/log/nginx
     - ./logs/saml:/var/log/saml
-    - ./src/component:/home/components/helloworld
-    - ./src/template:/home/templates/joomlapure
     - ./cert:/var/simplesamlphp/cert
+    - ./simplesamlphp/modules/joomlamodule:/var/simplesamlphp/modules/joomlamodule
     depends_on:
     - db
     environment:
@@ -30,5 +29,5 @@ services:
     container_name: sample-scuola-ssphp-db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
     tty: true
