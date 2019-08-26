@@ -63,7 +63,7 @@ $config = [
      * root directory.
      */
     'certdir' => 'cert/',
-    'loggingdir' => 'log/',
+    'loggingdir' => '/var/log/saml',
     'datadir' => 'data/',
     'tempdir' => '/tmp/simplesaml',
 
@@ -225,7 +225,7 @@ $config = [
      * empty array.
      */
     'debug' => [
-        'saml' => false,
+        'saml' => true,
         'backtraces' => true,
         'validatexml' => false,
     ],
@@ -267,8 +267,8 @@ $config = [
      * Options: [syslog,file,errorlog]
      *
      */
-    'logging.level' => SimpleSAML\Logger::NOTICE,
-    'logging.handler' => 'syslog',
+    'logging.level' => SimpleSAML\Logger::DEBUG,
+    'logging.handler' => 'file',
 
     /*
      * Specify the format of the logs. Its use varies depending on the log handler used (for instance, you cannot
@@ -436,7 +436,7 @@ $config = [
      * one of the functionalities below, but in some cases you could run multiple functionalities.
      * In example when you are setting up a federation bridge.
      */
-    'enable.saml20-idp' => false,
+    'enable.saml20-idp' => true,
     'enable.shib13-idp' => false,
     'enable.adfs-idp' => false,
     'enable.wsfed-sp' => false,
@@ -469,7 +469,10 @@ $config = [
      * Example:
      *
      * 'module.enable' => [
-     *      'exampleauth' => true, // Setting to TRUE enables.
+     *
+     *
+     *
+     * 'exampleauth' => true, // Setting to TRUE enables.
      *      'saml' => false, // Setting to FALSE disables.
      *      'core' => null, // Unset or NULL uses default.
      * ],

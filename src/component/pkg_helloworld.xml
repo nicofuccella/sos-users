@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="component" version="1.0" method="upgrade">
+    <name>helloworld</name>
+    <author>Scuola Online Service Team</author>
+    <packagename>dev</packagename>
+    <version>1.0.0</version>
+    <description>helloworld - Dev package</description>
+    <scriptfile>pkg_script.php</scriptfile>
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>helloworld.php</filename>
+    </files>
+    <administration>
+		<!-- Administration Menu Section -->
+		<menu link='index.php?option=com_helloworld'>Hello World!</menu>
+		<!-- Administration Main File Copy Section -->
+		<!-- Note the folder attribute: This attribute describes the folder
+			to copy FROM in the package to install therefore files copied
+			in this section are copied from /admin/ in the package -->
+		<files folder="admin">
+			<!-- Admin Main File Copy Section -->
+			<filename>index.html</filename>
+			<filename>helloworld.php</filename>
+		</files>
+	</administration>
+</extension>
