@@ -2,8 +2,8 @@
 
 namespace SimpleSAML\Module\joomlamodule\Auth\Source;
 
-class JoomlaAuth extends \SimpleSAML\Module\core\Auth\UserPassBase {
-  protected function login($username, $password) {
+class JoomlaAuth extends \SimpleSAML\Auth\Source {
+  protected function authenticate() {
     define('DS', DIRECTORY_SEPARATOR);
     define('_JEXEC', 1);
     define('JPATH_BASE', '/var/www/html/sample-scuola');
