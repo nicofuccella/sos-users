@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `#__LoginTokens` (
-    `token` VARCHAR(255) NOT NULL,
+    `token` VARCHAR(63) NOT NULL,
     `user_id` INT NOT NULL UNIQUE,
     `exp` TIMESTAMP NOT NULL,
     PRIMARY KEY (`token`),

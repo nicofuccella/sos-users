@@ -20,39 +20,39 @@ class HelloWorldController extends JControllerLegacy {
 
     $query = $db->getQuery(true);
     $query
-      ->select('COUNT(*)')
+      ->select('user_id')
       ->from($db->quoteName('#__LoginTokens'))
       ->where($db->quoteName('token').' = '.$db->quote($app->input->get('token')))
       ->andWhere($db->quoteName('exp').' >= NOW()');
 
     $db->setQuery($query);
-    $row = $db->loadResult();
-
-    echo json_encode([
-      'message' =>  'Token is correct, user is authenticated.',
+    $user_id = $db->loadResult();
+    print json_encode([
+      'message' =>  'Token is '.((bool)$user_id ? 'correct, user is authenticated.' : 'incorrect.'),
       'statusCode' => 200,
-      'status' => (bool)$row
+      'status' => (bool)$user_id,
+      //'user' => $app->getUser($user_id),
     ]);
-    die;
+    die();
   }
 
   function test() {
     //'&redirect_uri='.urlencode(\SimpleSAML\Module::getModuleURL('authwindowslive').'/linkback.php').
     //'&state='.urlencode($stateID).
     //$this->msg="Accedi con il tuo account della scuola per proseguire.";
-    $url=JUri::getInstance();
-    $matches = [];
-    preg_match('/(https?:\/\/).*?(\/.*)/', $url, $matches);
-    $this->msg.=$url.$matches."<br>";
+    //$url=JUri::getInstance();
+    //$matches = [];
+    //preg_match('/(https?:\/\/).*?(\/.*)/', $url, $matches);
+    //$this->msg.=$url.$matches."<br>";
+    $db = JFactory::getDbo();
+    $query = $db->getQuery(true);
 
-    //$query = $db->getQuery(true);
-//
-    //$query
-    //  ->select($db->quoteName('*'))
-    //  ->from($db->quoteName('#__LoginTokens'));
-//
-    //$db->setQuery($query);
-    //$row = $db->loadRowList();
-    //$this->msg=$row[0][0];
+    $query
+      ->select($db->quoteName('*'))
+      ->from($db->quoteName('#__LoginTokens'));
+
+    $db->setQuery($query);
+    $row = $db->loadRowList();
+    echo $row[0][0];
   }
 }

@@ -18,7 +18,7 @@ class HelloWorldViewHelloWorld extends JViewLegacy {
 
 	function display($tpl = null) {
     $app  = JFactory::getApplication();
-    $redirect_uri = $app->input->get('redirect_uri', false);
+    $redirect_uri = $app->input->get('redirect_uri', false, 'STRING');
     if (!$redirect_uri) {
       $this->msg='Qualcosa è andato storto, riprova.';
 
@@ -34,7 +34,7 @@ class HelloWorldViewHelloWorld extends JViewLegacy {
     $db = JFactory::getDbo();
     $query = $db->getQuery(true);
 
-    $token = $db->quote($this->random_str(255));
+    $token = $db->quote($this->random_str(63));
     $exp = 'FROM_UNIXTIME('.(time() + 5 * 60).')';
 
     $columns = array('token', 'user_id', 'exp');
@@ -46,12 +46,12 @@ class HelloWorldViewHelloWorld extends JViewLegacy {
       ->values(implode(',', $values));
     $query.=
       ' ON DUPLICATE KEY UPDATE '.
-      $db->quoteName('token').' = '.$token.", ".
+      $db->quoteName('token').' = '.$token.', '.
       $db->quoteName('exp').' = '.$exp;
 
     $db->setQuery($query);
     $db->execute();
 
-    $app->redirect($redirect_uri);
+    $app->redirect($redirect_uri.(strpos($redirect_uri, '?') ? '&' : '?').'token='.str_replace('\'',"", $token));
 	}
 }
