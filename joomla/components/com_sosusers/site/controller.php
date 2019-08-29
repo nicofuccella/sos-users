@@ -1,7 +1,7 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-class HelloWorldController extends JControllerLegacy {
+class SOSUsersController extends JControllerLegacy {
   function verify_token() {
     $app = JFactory::getApplication();
     $db = JFactory::getDbo();
@@ -45,3 +45,4 @@ class HelloWorldController extends JControllerLegacy {
     ]));
   }
 }
+//TODO add logout

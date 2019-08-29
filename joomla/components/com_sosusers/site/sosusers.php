@@ -1,8 +1,8 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-// Get an instance of the controller prefixed by HelloWorld
-$controller = JControllerLegacy::getInstance('HelloWorld');
+// Get an instance of the controller prefixed by SOSUsers
+$controller = JControllerLegacy::getInstance('SOSUsers');
 
 // Perform the Request task
 $input = JFactory::getApplication()->input;

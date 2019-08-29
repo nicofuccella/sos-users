@@ -1,7 +1,7 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-class HelloWorldViewHelloWorld extends JViewLegacy {
+class SOSUsersViewSOSUsers extends JViewLegacy {
   function random_str($length = 64, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
     if ($length < 1) {
       $length = 64;
