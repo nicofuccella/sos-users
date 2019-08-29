@@ -8,18 +8,20 @@ $state = \SimpleSAML\Auth\State::loadState(
   \SimpleSAML\Module\joomlamodule\Auth\Source\JoomlaAuth::STAGE_INIT
 );
 
-if (!array_key_exists('token', $_REQUEST)) {
-  throw new \Exception('Missing token');
-}
+//if (!array_key_exists('token', $_REQUEST)) {
+//  throw new \Exception('Missing token');
+//}
 $state['joomlamodule:verification_code'] = $_REQUEST['token'];
 
 assert(array_key_exists(\SimpleSAML\Module\joomlamodule\Auth\Source\JoomlaAuth::AUTHID, $state));
 $sourceId = $state[\SimpleSAML\Module\joomlamodule\Auth\Source\JoomlaAuth::AUTHID];
 
 $source = \SimpleSAML\Auth\Source::getById($sourceId);
+
 if ($source === null) {
   throw new \Exception('Could not find authentication source with id '.$sourceId);
 }
-$source->check_auth($state);
+
+$source->final_step($state);
 
 \SimpleSAML\Auth\Source::completeAuth($state);

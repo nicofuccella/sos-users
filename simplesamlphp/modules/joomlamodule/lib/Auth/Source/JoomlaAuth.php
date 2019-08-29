@@ -37,18 +37,22 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
     \SimpleSAML\Utils\HTTP::redirectTrustedURL($authorizeURL);
   }
 
-  public function check_auth(&$state) {
+  public function final_step(&$state) {
     $url =
       $this->auth_url .
       (strpos($this->auth_url, '?') ? '&' : '?') . 'task=verify_token'
       . '&token=' . $state['joomlamodule:verification_code'];
     //Use file_get_contents to GET the URL in question.
     $contents = file_get_contents($url);
-
     //If $contents is not a boolean FALSE value.
-    if ($contents !== false) {
-      //Print out the contents.
-      echo $contents;
+    if ($contents === false) {
+      throw new \Exception('Joomla Auth source not reachable.');
     }
+    $contents = json_decode($contents);
+    if (!$contents->status) {
+      throw new \Exception($contents->message);
+    }
+
+    $state['Attributes'] = ['user' => [$contents->username]];
   }
 }
