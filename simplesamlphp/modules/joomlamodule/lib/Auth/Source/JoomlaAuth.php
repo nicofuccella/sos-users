@@ -35,9 +35,9 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
 
   public function verify_token(&$state) {
     $idp_url =
-      $this->auth_url .
-      (strpos($this->auth_url, '?') ? '&' : '?') . 'task=verify_token'
-      . '&token=' . $state['joomlamodule:verification_token'];
+      $this->auth_url.
+      (strpos($this->auth_url, '?') ? '&' : '?').'task=verify_token'
+      .'&token='.$state['joomlamodule:verification_token'];
 
     $contents = file_get_contents($idp_url);
 
@@ -52,5 +52,13 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
     }
 
     $state['Attributes'] = ['user' => [$contents->user]];
+  }
+
+  public function logout(&$state) {
+    $logout_URL =
+      $this->auth_url.
+      (strpos($this->auth_url, '?') ? '&' : '?').'task=logout';
+
+    \SimpleSAML\Utils\HTTP::redirectTrustedURL($logout_URL);
   }
 }

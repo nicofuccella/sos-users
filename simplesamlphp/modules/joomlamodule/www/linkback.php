@@ -20,7 +20,7 @@ $sourceId = $state[\SimpleSAML\Module\joomlamodule\Auth\Source\JoomlaAuth::AUTH_
 $source = \SimpleSAML\Auth\Source::getById($sourceId);
 
 if ($source === null) {
-  throw new \Exception('Could not find authentication source with id '.$sourceId);
+  throw new \Exception("Could not find authentication source with id $sourceId");
 }
 
 $source->verify_token($state);

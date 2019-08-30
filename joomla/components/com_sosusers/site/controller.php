@@ -44,6 +44,15 @@ class SOSUsersController extends JControllerLegacy {
       'user' => $user_data['username'],
     ]));
   }
+
+  function logout() {
+    $app = JFactory::getApplication();
+    $id = JFactory::getUser()->id;
+
+    if($id !== 0)  {
+       $app->logout($id);
+    }
+
+    $app->redirect("index.php");
+  }
 }
-//TODO add logout
-//TODO add google sync
