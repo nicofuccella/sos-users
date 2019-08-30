@@ -8,5 +8,5 @@ $metadata['__DYNAMIC:1__'] = [
   'privatekey'   => 'googleappsidp.pem',
   'certificate'  => 'googleappsidp.crt',
 
-  'auth' => 'joomlaauthinstance',
+  'auth' => 'joomlamodule:JoomlaAuth',
 ];
