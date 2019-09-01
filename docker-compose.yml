@@ -13,7 +13,7 @@ services:
     - ./logs/saml:/var/log/saml
     - ./cert:/var/simplesamlphp/cert
     - ./simplesamlphp/modules/joomlamodule:/var/simplesamlphp/modules/joomlamodule
-    - ./joomla/components/com_sosusers:/home/components/helloworld
+    - ./joomla/components/com_sosusers:/home/components/sosusers
     depends_on:
     - db
     environment:

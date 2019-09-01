@@ -5,16 +5,18 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
   const STAGE_INIT = 'joomlamodule:init';
   const AUTH_ID_INDEX = 'joomlamodule:AuthId';
 
-  private $auth_url;
+  private $redirect_url;
+  private $verify_url;
 
   public function __construct($info, $config) {
     parent::__construct($info, $config);
 
-    if (!array_key_exists('auth_url', $config)) {
+    if (!array_key_exists('redirect_url', $config)) {
       throw new \Exception('Invalid config: missing auth URL.');
     }
 
-    $this->auth_url = $config['auth_url'];
+    $this->redirect_url = $config['redirect_url'];
+    $this->verify_url = $config['verify_url'];
   }
 
   public function authenticate(&$state) {
@@ -22,8 +24,8 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
     $state_id = \SimpleSAML\Auth\State::saveState($state, self::STAGE_INIT);
 
     $login_URL =
-      $this->auth_url.
-      (strpos($this->auth_url, '?') ? '&' : '?').'redirect_uri='.
+      $this->redirect_url.
+      (strpos($this->redirect_url, '?') ? '&' : '?').'redirect_uri='.
       urlencode(
         \SimpleSAML\Module::getModuleURL('joomlamodule').
         '/linkback.php'.
@@ -35,8 +37,8 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
 
   public function verify_token(&$state) {
     $idp_url =
-      $this->auth_url.
-      (strpos($this->auth_url, '?') ? '&' : '?').'task=verify_token'
+      $this->redirect_url.
+      (strpos($this->redirect_url, '?') ? '&' : '?').'task=verify_token'
       .'&token='.$state['joomlamodule:verification_token'];
 
     $contents = file_get_contents($idp_url);
@@ -56,8 +58,10 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
 
   public function logout(&$state) {
     $logout_URL =
-      $this->auth_url.
-      (strpos($this->auth_url, '?') ? '&' : '?').'task=logout';
+      $this->redirect_url.
+      (strpos($this->redirect_url, '?') ? '&' : '?').'task=logout';
+
+    session_destroy();
 
     \SimpleSAML\Utils\HTTP::redirectTrustedURL($logout_URL);
   }

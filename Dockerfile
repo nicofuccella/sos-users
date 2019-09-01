@@ -1,6 +1,4 @@
-FROM simo
-
-ARG ciao
+FROM scuolaonlineservice/sample-scuola
 
 RUN apt-get install -y curl\
   php7.2-dom\
@@ -8,7 +6,7 @@ RUN apt-get install -y curl\
   vim
 
 RUN wget -qO- https://simplesamlphp.org/download?latest | tar -xz -C /var &&\
-  mv /var/simplesamlphp-* /var/simplesamlphp $ciao
+  mv /var/simplesamlphp-* /var/simplesamlphp
 
 COPY simplesamlphp /var/simplesamlphp
 
