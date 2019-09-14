@@ -1,7 +1,7 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-class SOSUsersController extends JControllerLegacy {
+class SAMLLoginController extends JControllerLegacy {
   function verify_token() {
     $app = JFactory::getApplication();
     $db = JFactory::getDbo();

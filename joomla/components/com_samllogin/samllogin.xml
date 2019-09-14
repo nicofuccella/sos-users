@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
-	<name>SOS Users</name>
+	<name>SOS - SAML IDp Login</name>
 	<creationDate>August 2019</creationDate>
-	<author>Matteo Bonacini</author>
+	<author>Matteo Bonacini - Scuola Online Service</author>
 	<authorEmail>matteo.bonacini@soluzionifutura.com</authorEmail>
-	<version>0.0.2</version>
-	<description>Handles SimpleSamlPHP authentication requests and syncs contacts with Google</description>
+	<version>1.0.0</version>
+	<description>Gestisce richieste di autenticazione SAML inviate da SimpleSAMLphp</description>
 
   <install>
     <sql>
       <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
     </sql>
   </install>
-  <uninstall> <!-- Runs on uninstall -->
+  <uninstall>
     <sql>
       <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
     </sql>
   </uninstall>
-	<update> <!-- Runs on update; New since J2.5 -->
+	<update>
 		<schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
 		</schemas>
@@ -25,18 +25,17 @@
 
 	<files folder="site">
 		<filename>index.html</filename>
-		<filename>sosusers.php</filename>
+		<filename>samllogin.php</filename>
 		<filename>controller.php</filename>
 		<folder>views</folder>
 	</files>
 
 	<administration>
-		<menu link='index.php?option=com_sosusers'>SOS Users</menu>
+		<menu link='index.php?option=com_samllogin'>SOS Users</menu>
 		<files folder="admin">
 			<filename>index.html</filename>
-			<filename>sosusers.php</filename>
+			<filename>samllogin.php</filename>
 			<folder>sql</folder>
     </files>
 	</administration>
-
 </extension>
