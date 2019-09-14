@@ -1,1 +1,2 @@
-SOS Users Administration
+<?php
+echo "Il componente SAML Login è installato";
