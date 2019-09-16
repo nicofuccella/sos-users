@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
-	<name>SOS - SAML IDp Login</name>
+	<name>com_samllogin</name>
 	<creationDate>August 2019</creationDate>
 	<author>Matteo Bonacini - Scuola Online Service</author>
 	<authorEmail>matteo.bonacini@soluzionifutura.com</authorEmail>
@@ -31,7 +31,7 @@
 	</files>
 
 	<administration>
-		<menu link='index.php?option=com_samllogin'>SOS Users</menu>
+		<menu>SAML Login</menu>
 		<files folder="admin">
 			<filename>index.html</filename>
 			<filename>samllogin.php</filename>
