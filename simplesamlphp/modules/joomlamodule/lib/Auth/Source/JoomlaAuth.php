@@ -1,6 +1,8 @@
 <?php
 namespace SimpleSAML\Module\joomlamodule\Auth\Source;
 
+use SimpleSAML\Error\Exception;
+
 class JoomlaAuth extends \SimpleSAML\Auth\Source {
   const STAGE_INIT = 'joomlamodule:init';
   const AUTH_ID_INDEX = 'joomlamodule:AuthId';
@@ -12,7 +14,7 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
     parent::__construct($info, $config);
 
     if (!array_key_exists('redirect_url', $config)) {
-      throw new \Exception('Invalid config: missing auth URL.');
+      throw new \SimpleSAML\Error\Exception('Invalid config: missing auth URL.');
     }
 
     $this->redirect_url = $config['redirect_url'];
@@ -31,8 +33,11 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
         '/linkback.php'.
         '?state_id='.base64_encode($state_id)
       );
-
-    \SimpleSAML\Utils\HTTP::redirectTrustedURL($login_URL);
+    try {
+      \SimpleSAML\Utils\HTTP::redirectTrustedURL($login_URL);
+    } catch (Exception $error) {
+      throw new Exception('Cannot redirect to redirect_url. Please check your configuration.');
+    }
   }
 
   public function verify_token(&$state) {

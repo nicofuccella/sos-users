@@ -1,6 +1,8 @@
 FROM scuolaonlineservice/sample-scuola
 
-RUN apt-get install -y curl\
+RUN apt-get update -y &&\
+  apt-get install -y\
+  curl\
   php7.2-dom\
   php7.2-mbstring
 
