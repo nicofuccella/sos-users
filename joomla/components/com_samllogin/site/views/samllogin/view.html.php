@@ -1,46 +1,38 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-class SAMLLoginViewSAMLLogin extends JViewLegacy {
-  function random_str($length = 64, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
-    if ($length < 1) {
-      $length = 64;
-    }
-    $pieces = [];
-    $max = mb_strlen($keyspace, '8bit') - 1;
-    for ($i = 0; $i < $length; ++$i) {
-      $pieces []= $keyspace[random_int(0, $max)];
-    }
-    return implode('', $pieces);
-  }
+use \Joomla\CMS\MVC\View\HtmlView;
 
+class SAMLLoginViewSAMLLogin extends HtmlView {
 	function display($tpl = null) {
     $app = JFactory::getApplication();
     $db = JFactory::getDbo();
 
     $redirect_uri = $app->input->get('redirect_uri', false, 'STRING');
+
     if (!$redirect_uri) {
-      $this->msg='Qualcosa è andato storto, riprova.';
-      return parent::display($tpl);
+      $redirect_uri = base64_decode($app->input->get('redirect_uri_base64', false, 'STRING'));
     }
 
     $id = JFactory::getUser()->id;
     if($id == 0)  {
-      $this->msg='Esegui il login con le credenziali della tua scuola per continuare.';
-      return parent::display($tpl);
+      $redirectUrl = urlencode(base64_encode("index.php?option=com_samllogin&redirect_uri_base64=" . base64_encode($redirect_uri)));
+
+      $app->redirect("index.php?option=com_users&view=login&return=$redirectUrl",'');
     }
 
-    $token = $db->quote($this->random_str(63));
-    $exp = 'FROM_UNIXTIME('.(time() + 1 * 60).')';
+    $token = $db->quote(JFactory::getSession()->getId());
+    $exp = 'FROM_UNIXTIME('.(time() + JFactory::getSession()->getExpire()).')';
 
-    $columns = array('token', 'user_id', 'exp');
-    $values = array($token, $id, $exp);
+    $columns = ['token', 'user_id', 'exp'];
+    $values = [$token, $id, $exp];
 
     $query = $db->getQuery(true);
     $query
       ->insert($db->quoteName('#__LoginTokens'))
       ->columns($db->quoteName($columns))
       ->values(implode(',', $values));
+
     $query.=
       ' ON DUPLICATE KEY UPDATE '.
       $db->quoteName('token').' = '.$token.', '.
@@ -49,10 +41,16 @@ class SAMLLoginViewSAMLLogin extends JViewLegacy {
     $db->setQuery($query);
     $db->execute();
 
-    $app->redirect(
-      $redirect_uri.
-      (strpos($redirect_uri, '?') ? '&' : '?').
-      'token='.str_replace('\'',"", $token)
-    );
+    if ($redirect_uri) {
+      $app->redirect(
+        $redirect_uri.
+        (strpos($redirect_uri, '?') ? '&' : '?').
+        'token='.str_replace('\'',"", $token)
+      );
+    } else {
+      $app->redirect(
+        "/"
+      );
+    }
 	}
 }

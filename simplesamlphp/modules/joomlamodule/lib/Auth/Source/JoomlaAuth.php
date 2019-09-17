@@ -54,9 +54,9 @@ class JoomlaAuth extends \SimpleSAML\Auth\Source {
 
     $contents = json_decode($contents);
 
-    if (!$contents->status) {
-      throw new \SimpleSAML\Error\Exception($contents->message);
-    }
+//    if (!$contents->status) {
+//      throw new \SimpleSAML\Error\Exception($contents->message);
+//    }
 
     $state['Attributes'] = ['user' => [$contents->user]];
   }
